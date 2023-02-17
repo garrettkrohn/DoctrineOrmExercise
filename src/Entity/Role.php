@@ -11,14 +11,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Role
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $role_id = null;
 
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
     #[ORM\OneToMany(mappedBy: 'Role', targetEntity: User::class)]
+    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'user_id')]
     private Collection $Users;
 
     public function __construct()
@@ -28,7 +29,7 @@ class Role
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->role_id;
     }
 
     public function getName(): ?string

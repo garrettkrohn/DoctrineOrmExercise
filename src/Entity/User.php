@@ -10,20 +10,21 @@ use Doctrine\ORM\Mapping as ORM;
 class User
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
+    #[ORM\GeneratedValue(strategy: 'SEQUENCE')]
     #[ORM\Column]
-    private ?int $id = null;
+    private ?int $user_id = null;
 
     #[ORM\Column(length: 50)]
     private ?string $name = null;
 
     #[ORM\ManyToOne(inversedBy: 'Users')]
-    #[ORM\JoinColumn(nullable: false)]
+    #[ORM\JoinColumn(name: 'role_id', referencedColumnName: 'role_id',
+        nullable: false)]
     private ?Role $Role = null;
 
     public function getId(): ?int
     {
-        return $this->id;
+        return $this->user_id;
     }
 
     public function getName(): ?string
